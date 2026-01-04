@@ -18,7 +18,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 
 from src.graph.state import MarketState
 from src.config.prompts import PDF_COMPILER_PROMPT
-from src.utils.llm import get_llm
+from src.utils.llm import get_analysis_llm
 
 
 def generate_markdown_report(state: MarketState) -> str:

@@ -17,7 +17,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from src.graph.state import MarketState
 from src.config.prompts import ANTHROPOLOGIST_PROMPT
 from src.config.settings import INDIA_SEGMENTS
-from src.utils.llm import get_llm
+from src.utils.llm import get_analysis_llm
 
 
 def run_anthropologist(state: MarketState) -> Dict[str, Any]:
@@ -53,7 +53,7 @@ def run_anthropologist(state: MarketState) -> Dict[str, Any]:
         for name, info in INDIA_SEGMENTS.items()
     ])
     
-    llm = get_llm()
+    llm = get_analysis_llm()
     
     messages = [
         SystemMessage(content=ANTHROPOLOGIST_PROMPT),

@@ -16,7 +16,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 
 from src.graph.state import MarketState
 from src.config.prompts import ANALYZER_PROMPT
-from src.utils.llm import get_llm
+from src.utils.llm import get_analysis_llm
 
 
 def run_analyzer(state: MarketState) -> Dict[str, Any]:
@@ -51,7 +51,7 @@ def run_analyzer(state: MarketState) -> Dict[str, Any]:
     
     competitor_context = json.dumps(competitors, indent=2)
     
-    llm = get_llm()
+    llm = get_analysis_llm()
     
     messages = [
         SystemMessage(content=ANALYZER_PROMPT),

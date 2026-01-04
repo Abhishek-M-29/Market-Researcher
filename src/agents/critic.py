@@ -17,7 +17,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 
 from src.graph.state import MarketState
 from src.config.prompts import CRITIC_PROMPT
-from src.utils.llm import get_llm
+from src.utils.llm import get_research_llm
 from src.utils.scoring import (
     score_pain_points,
     get_verification_feedback,
@@ -80,7 +80,7 @@ def run_critic(state: MarketState) -> Dict[str, Any]:
         enriched_pains.append(pain)
     
     # Use LLM to extract statistics from search results
-    llm = get_llm()
+    llm = get_research_llm()
     
     messages = [
         SystemMessage(content=CRITIC_PROMPT),

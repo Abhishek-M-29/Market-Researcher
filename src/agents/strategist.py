@@ -17,7 +17,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 
 from src.graph.state import MarketState
 from src.config.prompts import STRATEGIST_PROMPT
-from src.utils.llm import get_llm
+from src.utils.llm import get_research_llm
 from src.utils.sentiment import filter_genuine_pains, analyze_pain_points
 from src.tools.search import (
     search_community_sources,
@@ -69,8 +69,8 @@ def run_strategist(state: MarketState) -> Dict[str, Any]:
     if feedback:
         feedback_context = f"\n\nPREVIOUS FEEDBACK FROM CRITIC:\n{feedback}\nPlease address these gaps in your research."
     
-    # Call LLM to extract structured pain points
-    llm = get_llm()
+    # Call LLM to extract structured pain points (Perplexity for research)
+    llm = get_research_llm()
     
     messages = [
         SystemMessage(content=STRATEGIST_PROMPT),

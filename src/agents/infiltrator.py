@@ -17,7 +17,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 
 from src.graph.state import MarketState
 from src.config.prompts import INFILTRATOR_PROMPT
-from src.utils.llm import get_llm
+from src.utils.llm import get_research_llm
 from src.utils.scraper import analyze_competitor, batch_analyze_competitors
 from src.tools.search import search_indian_sources
 
@@ -48,7 +48,7 @@ def run_infiltrator(state: MarketState) -> Dict[str, Any]:
     all_results = search_results + direct_results
     
     # Step 2: Use LLM to extract competitor URLs from search results
-    llm = get_llm()
+    llm = get_research_llm()
     
     extract_messages = [
         SystemMessage(content="Extract competitor company names and their website URLs from the search results. Return as JSON: {\"competitors\": [{\"name\": str, \"url\": str}]}"),

@@ -13,8 +13,8 @@ import os
 from datetime import datetime
 from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
+# Load environment variables (override=True to pick up changes)
+load_dotenv(override=True)
 
 # Page config
 st.set_page_config(
@@ -81,11 +81,15 @@ def render_sidebar():
             key="region_select"
         )
         
-        # API Key check
+        # API Key check - need all 3 keys
+        perplexity_key = os.getenv("PERPLEXITY_API_KEY", "")
         google_key = os.getenv("GOOGLE_API_KEY", "")
         tavily_key = os.getenv("TAVILY_API_KEY", "")
-        api_keys_valid = (google_key and google_key != "your_google_api_key_here" and 
-                         tavily_key and tavily_key != "your_tavily_api_key_here")
+        api_keys_valid = (
+            perplexity_key and perplexity_key != "your_perplexity_api_key_here" and
+            google_key and google_key != "your_google_api_key_here" and
+            tavily_key and tavily_key != "your_tavily_api_key_here"
+        )
         run_disabled = not (idea and api_keys_valid)
         
         # ======== PROMINENT ENTER BUTTON ========
@@ -107,17 +111,23 @@ def render_sidebar():
         
         # API Key status (collapsed by default)
         with st.expander("🔑 API Keys", expanded=False):
+            st.caption("**Research LLM (Perplexity)**")
+            if perplexity_key and perplexity_key != "your_perplexity_api_key_here":
+                st.success("✅ Perplexity API Key")
+            else:
+                st.error("❌ Perplexity API Key missing")
+            
+            st.caption("**Analysis LLM (Gemini)**")
             if google_key and google_key != "your_google_api_key_here":
-                st.success("✅ Google API Key configured")
+                st.success("✅ Google API Key")
             else:
                 st.error("❌ Google API Key missing")
-                st.caption("Add GOOGLE_API_KEY to .env file")
             
+            st.caption("**Web Search (Tavily)**")
             if tavily_key and tavily_key != "your_tavily_api_key_here":
-                st.success("✅ Tavily API Key configured")
+                st.success("✅ Tavily API Key")
             else:
                 st.error("❌ Tavily API Key missing")
-                st.caption("Add TAVILY_API_KEY to .env file")
         
         if run_clicked:
             return idea, region, True

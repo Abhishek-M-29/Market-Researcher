@@ -17,7 +17,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 
 from src.graph.state import MarketState
 from src.config.prompts import INNOVATOR_PROMPT
-from src.utils.llm import get_llm
+from src.utils.llm import get_analysis_llm
 from src.utils.rice import score_features, validate_rice_inputs, categorize_features
 
 
@@ -71,7 +71,7 @@ def run_innovator(state: MarketState) -> Dict[str, Any]:
 Please simplify features or adjust scope to improve financial viability.
 """
     
-    llm = get_llm()
+    llm = get_analysis_llm()
     
     messages = [
         SystemMessage(content=INNOVATOR_PROMPT),

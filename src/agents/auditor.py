@@ -16,7 +16,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 
 from src.graph.state import MarketState
 from src.config.prompts import AUDITOR_PROMPT
-from src.utils.llm import get_llm
+from src.utils.llm import get_analysis_llm
 from src.utils.financials import (
     analyze_financials,
     dict_to_inputs,
@@ -65,7 +65,7 @@ def run_auditor(state: MarketState) -> Dict[str, Any]:
         for p in personas[:5]
     ]
     
-    llm = get_llm()
+    llm = get_analysis_llm()
     
     messages = [
         SystemMessage(content=AUDITOR_PROMPT),

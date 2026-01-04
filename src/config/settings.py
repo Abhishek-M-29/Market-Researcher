@@ -6,17 +6,19 @@ All API keys, model settings, and scoring weights live here.
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+# Force reload .env to pick up any changes
+load_dotenv(override=True)
 
 # ===== API KEYS =====
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY", "")
+PERPLEXITY_API_KEY = os.getenv("PERPLEXITY_API_KEY", "")
 
 # ===== MODEL SETTINGS =====
-# Model name is ONLY defined in .env file - no defaults here
-GEMINI_MODEL = os.getenv("GEMINI_MODEL")
-if not GEMINI_MODEL:
-    raise ValueError("GEMINI_MODEL not found in .env file. Please set it.")
+# Perplexity for research/fact-finding (Strategist, Critic, Infiltrator)
+PERPLEXITY_MODEL = os.getenv("PERPLEXITY_MODEL", "sonar-pro")
+# Gemini for analysis/synthesis (Anthropologist, Analyzer, Innovator, Auditor, PDF Compiler)
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 LLM_TEMPERATURE = float(os.getenv("LLM_TEMPERATURE", "0.7"))
 
 # ===== DOMAIN TRUST SCORES =====
