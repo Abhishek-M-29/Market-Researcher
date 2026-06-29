@@ -6,6 +6,7 @@ Wraps Tavily for market research purposes with Indian domain priorities.
 
 import os
 from typing import List, Dict, Any, Optional
+from langchain_core.tools import tool
 from langchain_community.tools.tavily_search import TavilySearchResults
 from src.config.settings import TAVILY_API_KEY
 
@@ -62,9 +63,17 @@ def search_with_domains(
         return []
 
 
+@tool
 def search_indian_sources(query: str, max_results: int = 5) -> List[Dict[str, Any]]:
     """
-    Search prioritizing Indian news and startup sources.
+    Search prioritizing Indian news and startup sources for market data, statistics, and competitor information.
+    
+    Args:
+        query: The search query (e.g., "expense tracker market size India 2025")
+        max_results: Maximum number of results to return (default: 5)
+    
+    Returns:
+        List of search results with URLs, content, and metadata from Indian sources.
     """
     indian_domains = [
         "inc42.com",
@@ -77,9 +86,17 @@ def search_indian_sources(query: str, max_results: int = 5) -> List[Dict[str, An
     return search_with_domains(query, indian_domains, max_results)
 
 
+@tool
 def search_community_sources(query: str, max_results: int = 5) -> List[Dict[str, Any]]:
     """
-    Search community platforms for user complaints and discussions.
+    Search community platforms (Reddit, Twitter, Quora) for user complaints, pain points, and discussions.
+    
+    Args:
+        query: The search query (e.g., "expense tracking problems India")
+        max_results: Maximum number of results to return (default: 5)
+    
+    Returns:
+        List of search results from community platforms with user-generated content.
     """
     community_domains = [
         "reddit.com",
